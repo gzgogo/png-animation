@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Demo</title>
+    <style>
+        .product-service-title-item {
+            width: 172px;
+            height: 146px;
+        }
+        .product-service-title {
+            text-align: center;
+            height: 146px;
+            padding: 21px 0 19px;
+            cursor: pointer;
+        }
+        .product-service-title .title-img {
+            margin: 0 auto;
+            width: 64px;
+            height: 64px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-size: 100%;
+            background-position-y: 0;
+        }
+        .product-service-title .title-desc {
+            margin-top: 4px;
+            text-align: center;
+            font-size: 14px;
+            color: #181818;
+            line-height: 24px;
+            font-weight: 400;
+            margin-bottom: 0;
+            transition: color .3s ease;
+        }
+        .options {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-service-title-item">
+        <div class=" product-service-title" ind="2" num_margin="1">
+            <div class="title-img" style="background-image: url(&quot;https://img.alicdn.com/tfs/TB1C7fPidTfau8jSZFwXXX1mVXa-128-2688.png&quot;); background-position-y: 0px;"></div>
+            <h3 class="title-desc">存储</h3>
+            <div class="title-content-underLine"></div>
+        </div>
+    </div>
+    <div class="options">
+        <button onclick="enter()">enter</button>
+        <button onclick="leave()">leave</button>
+    </div>
+    <script>
+        var FRAME_HEIGHT = 64;
+        var FRAME_COUNT = 20;
+        var IMAGE_HEIGHT = 1344;
+ 
+        var frameIndex = 0;
+
+        var timerEnter = null;
+        var timerLeave = null;
+
+        var container = document.getElementsByClassName("product-service-title")[0];
+        var img = document.getElementsByClassName("title-img")[0];
+
+        container.onmouseover = enter;
+        container.onmouseout = leave;
+
+        function enter() {
+            clearInterval(timerLeave);
+            timerEnter = setInterval(function() {
+                if (frameIndex < FRAME_COUNT && 64 * frameIndex < IMAGE_HEIGHT) {
+                    frameIndex += 1;
+                    img.style.backgroundPositionY = -64 * frameIndex + "px";
+                } else {
+                    clearInterval(timerEnter);
+                }
+            }, 30);
+        }
+
+        function leave() {
+            clearInterval(timerEnter),
+            timerLeave = setInterval(function() {
+                if (frameIndex > 0 && 64 * frameIndex > 0) {
+                    frameIndex -= 1;
+                    img.style.backgroundPositionY = -64 * frameIndex + "px";
+                } else {
+                    clearInterval(timerLeave);
+                }
+            }, 30);
+        }
+    </script>
+</body>
+</html>
